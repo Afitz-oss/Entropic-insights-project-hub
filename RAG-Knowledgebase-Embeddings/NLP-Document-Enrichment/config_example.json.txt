@@ -1,0 +1,9 @@
+
+### **Additional Files for NLP-Document-Enrichment**
+
+1. **config_example.json**
+
+   ```json
+   {
+       "openai_api_key": "YOUR_OPENAI_API_KEY"
+   }

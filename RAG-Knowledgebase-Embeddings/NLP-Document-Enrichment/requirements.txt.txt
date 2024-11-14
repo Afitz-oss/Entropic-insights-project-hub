@@ -1,0 +1,5 @@
+openai
+spacy
+scikit-learn
+llama_index
+langchain

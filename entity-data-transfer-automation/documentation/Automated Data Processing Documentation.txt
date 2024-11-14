@@ -1,0 +1,112 @@
+Automated Data Processing Documentation
+Overview
+This program suite automates the creation, extraction, and processing of large data sets involving sponsors and children, replacing a manual process that once required extensive employee resources and up to six months to complete. The fully automated solution now completes the workflow in approximately ten minutes, handling over 50,000 files efficiently. Key functionalities include workbook generation, data extraction, synthetic data simulation, and automated report creation.
+
+Bulk Sponsor and Children Workbook Generator
+Automates the creation of structured Excel workbooks for sponsors and unreported children. It produces workbooks with realistic, synthetic data for testing data entry and processing workflows.
+
+Purpose
+The script aims to streamline data handling for large datasets involving sponsors and children, ensuring consistent formatting while reducing manual workload.
+
+Functionality
+Workbook Creation: Generates Excel workbooks with synthetic data for sponsors and children.
+Custom Formatting: Applies styles, borders, and fills to simulate standard workbook templates.
+Dynamic Naming: Names files based on sponsor and child identifiers for easy identification.
+Usage
+Set the input file path.
+Run the script to generate workbooks for each row in the input file.
+
+df = pd.read_excel('Stress_test_data.xlsx')
+for index, row in df.iterrows():
+    create_workbook(row, columns, index)
+
+Investigation Report Data Simulator
+Simulates sensitive investigation reports for sponsors and children, generating realistic, anonymized data.
+
+Purpose
+Creates synthetic investigation reports to test data extraction workflows while preserving confidentiality.
+
+Functionality
+Generates Personal Data: Creates realistic names, dates of birth, addresses, etc.
+Standardized Report Structure: Produces reports with a consistent format.
+Automated File Creation: Generates files with timestamp-based identifiers.
+Usage
+Specify the number of files to generate and execute the script.
+
+num_files = 100
+main(num_files)
+
+Name Extraction and Sponsor Data Generation
+Extracts sponsor names from text files and generates a consolidated Excel workbook with synthetic sponsor and child data.
+
+Purpose
+Generates large synthetic datasets to validate data pipelines by consolidating sponsor data into a structured Excel workbook.
+
+Functionality
+Name Extraction: Reads names from text files.
+Data Simulation: Adds realistic data fields, including addresses and phone numbers.
+Excel Export: Compiles data into a structured workbook.
+Usage
+Set the folder path for text files and specify the number of rows to generate.
+
+folder_path = "path/to/text/files"
+filename = "Generated_Sponsor_Data.xlsx"
+parent_names = extract_names_from_files(folder_path)
+data = generate_data(350, parent_names)
+save_to_excel(data, filename)
+
+Automated Excel Update from Text Files
+Automates the process of extracting specific fields from text files and updating corresponding Excel sheets with the extracted data.
+
+Purpose
+Replaces manual data entry by populating Excel sheets with extracted text data, saving time and reducing errors.
+
+Functionality
+Data Extraction: Searches text files for specific fields and extracts values.
+Excel Update: Populates fields in matching Excel sheets.
+Conditional Formatting: Colors tabs based on data completeness (green, yellow, red).
+Usage
+Define paths for the text files and Excel workbooks, then run the script.
+
+update_excel_with_text_data(workbook_folder_path, text_file_folder_path, fields_data_dict)
+
+Automated Word Document Generator from Excel Data
+Generates structured Word document reports using data from Excel workbooks, ideal for project summaries and identification verification.
+
+Purpose
+Automates report generation based on Excel data, consolidating information into a formatted Word document for each record.
+
+Functionality
+Data Extraction: Retrieves relevant fields from Excel.
+Document Creation: Formats data into a structured Word document.
+Header/Footer Customization: Adds a logo in the header and a confidentiality disclaimer in the footer.
+Usage
+Run the script with Excel data to create Word documents for each record.
+
+PDF and Excel Data Extraction and Matching Script
+Automates the extraction of specific content from PDFs and updates matching Excel workbooks with filtered information, such as social media URLs.
+
+Purpose
+Processes large volumes of PDF files, extracts social media data, and matches it with Excel sheets for structured storage and easy access.
+
+Functionality
+PDF Extraction: Reads and extracts tables from PDF files.
+Content Filtering: Identifies URLs like LinkedIn, Twitter, and Facebook.
+Excel Matching and Updating: Matches PDF data to corresponding Excel sheets, adding filtered content to new sheets when a match is found.
+Usage
+Specify paths for PDF files and Excel sheets, then execute the script.
+
+Practical Applications
+This suite of scripts can be applied in scenarios where large datasets require automated data entry, reporting, and validation:
+
+Bulk Data Entry: Quickly populates structured templates.
+Automated Reporting: Generates predefined report formats with extracted data.
+Data Validation: Ensures all records are complete before submission.
+Requirements
+Python 3.8+
+Libraries: pandas, openpyxl, Faker, tqdm, PyPDF2, textdistance
+Install dependencies with:
+
+pip install pandas openpyxl Faker tqdm PyPDF2 textdistance
+
+This documentation provides a concise and structured guide for using the automated data processing tools, improving data handling efficiency and accuracy in large datasets.

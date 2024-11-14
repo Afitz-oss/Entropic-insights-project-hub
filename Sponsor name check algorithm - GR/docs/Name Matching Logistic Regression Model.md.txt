@@ -1,0 +1,87 @@
+Name Matching Logistic Regression Model
+
+This script trains a logistic regression model to identify matching name pairs based on Jaro-Winkler and Levenshtein similarity scores. It’s designed to predict whether two names are likely the same despite variations like typos or formatting differences, making it useful for applications where consistent identification is critical.
+
+Background & Purpose
+This model addresses real-world issues in name matching, where small discrepancies can create challenges in accurately identifying individuals. In this use case, the model helps identify children or individuals in records by matching names with slight differences. By training on similarity metrics, the model learns to classify names with common variations accurately, improving data integrity in systems that rely on consistent record-keeping.
+
+Requirements
+The script requires the following Python libraries:
+
+pandas: For data handling.
+numpy: For numerical operations.
+textdistance: For calculating name similarity scores.
+scikit-learn: For model training and evaluation.
+
+Install the dependencies with:
+pip install pandas numpy textdistance scikit-learn
+
+Code Overview:
+1. Load the Dataset
+df = pd.read_excel(r"c:\Users\btofi\Entropic-insights-project-hub\Sponsor name check algorithm - GR\data\name_matching_dataset.xlsx")
+The dataset is loaded from an Excel file and should contain pairs of names alongside a binary Match label indicating whether the names are considered a match.
+
+2. extract_features Function
+def extract_features(df):
+
+This function calculates the similarity scores between each pair of names using two metrics:
+
+Jaro-Winkler: Particularly effective for identifying similar short names.
+Levenshtein: Measures the minimum edit distance between names.
+
+The calculated scores are added as new columns to the DataFrame, which will serve as input features for the model.
+
+3. Define Features and Labels
+X = df[['Jaro-Winkler', 'Levenshtein']]
+y = df['Match']
+
+X: The similarity scores (Jaro-Winkler and Levenshtein) are used as independent features.
+y: The Match column is the target label indicating whether the names are considered similar.
+
+4. Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+The data is split into training and testing sets, with 80% used for training and 20% reserved for testing.
+
+5. Model Training
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+A logistic regression model is initialized and trained on the training data. Logistic regression is suitable here as a binary classifier, predicting whether two names are a match.
+
+6. Model Evaluation
+y_pred = model.predict(X_test)
+Predictions: Predictions are made on the test set.
+Evaluation Metrics: The model’s performance is evaluated using four key metrics:
+Accuracy: Measures the overall correctness of predictions.
+Precision: Indicates how often the model correctly predicts a match.
+Recall: Measures the model’s ability to identify all matching pairs.
+F1 Score: The harmonic mean of precision and recall, useful for assessing performance on imbalanced data.
+
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+
+print(f'Accuracy: {accuracy:.4f}')
+print(f'Precision: {precision:.4f}')
+print(f'Recall: {recall:.4f}')
+print(f'F1 Score: {f1:.4f}')
+
+Sample Output
+Based on the example run, the model achieved high scores on all metrics:
+
+This high performance suggests that the model effectively identifies matching names, making it well-suited for applications requiring accurate name matching.
+
+Usage Example
+To run the script:
+
+Ensure the dataset is stored at the specified path or update the path in the script to your local file location.
+Run the script to train the model and display its performance metrics.
+Practical Applications
+This model can be used in various scenarios, such as:
+
+Data Cleansing: Identifying duplicate names or correcting inconsistencies in databases.
+Identification Verification: Matching records for individuals across different systems, especially in sensitive contexts like social services or sponsorship programs.
+Record Reconciliation: Ensuring consistency in cases where different naming conventions or errors may prevent exact matches.
+
+

@@ -1,0 +1,89 @@
+Name Matching Dataset Generator
+
+This program generates a synthetic dataset of name pairs, simulating the kinds of errors commonly introduced by data entry clerks when recording names. The dataset is intended for training a logistic regression model (or similar models) to match names despite variations caused by misspellings, typos, or different formatting conventions. This application is crucial for cases where identifying individuals, such as missing or sponsored children, requires high accuracy in matching names across various records.
+
+Background & Purpose
+In contexts where accurate name matching is essential—such as tracking and identifying missing or sponsored children—data entry errors can significantly hinder effective identification. This program was developed to create a "dummy" dataset that includes these types of errors, enabling machine learning models to train on realistic data and become more resilient to common variations.
+
+By introducing controlled randomness, the program mimics realistic name discrepancies, such as:
+
+Misspellings: Swapping, replacing, or omitting letters to simulate typos.
+Variations in Middle Names: Adding or removing middle names to account for formatting differences.
+Transpositions: Swapping letters to represent typing errors.
+These variations help prepare a model to handle common inconsistencies in name records, increasing its effectiveness when deployed in real-world scenarios.
+
+Requirements
+The script requires the following Python libraries:
+
+Faker: Generates realistic names in multiple locales.
+textdistance: Calculates name similarity using algorithms like Jaro-Winkler and Levenshtein distance.
+pandas: Manages and exports data as a structured DataFrame.
+openpyxl: Saves the generated dataset in Excel format.
+
+Install the dependencies with:
+pip install Faker textdistance pandas openpyxl
+
+Code Overview
+1. is_similar Function
+This function checks if two names are similar based on two common distance metrics:
+
+Jaro-Winkler Distance: Measures string similarity, especially useful for short names with minor typos.
+Levenshtein Distance: Measures the number of edits needed to change one string into another.
+The function returns True if either metric meets a predefined similarity threshold, marking the names as a potential match.
+
+2. introduce_error Function
+This function introduces a controlled amount of error to a given name, simulating common data entry mistakes. Errors are randomly selected from a set of possible modifications, including:
+
+Replace: Replaces a character with a random one.
+Insert: Inserts an additional character.
+Delete: Removes a character.
+Transpose: Swaps two adjacent characters.
+Delete Middle Name: If a middle name exists, it may be removed to simulate missing entries.
+This function allows you to specify the number and type of modifications to fine-tune the variation introduced.
+
+3. generate_names Function
+This function creates name pairs, including:
+
+Matching Names: Pairs where one name has been altered with errors, maintaining similarity.
+Non-Matching Names: Pairs of unique names for non-matching examples.
+Parameters:
+
+n_matches: Number of similar name pairs to generate.
+repeats: Number of variations per matching name.
+n_unique: Number of non-matching name pairs.
+p_middle_name: Probability of including a middle name, adding complexity to the data.
+
+Example Usage:
+from name_matching_generator import generate_names, is_similar
+import pandas as pd
+
+# Set up parameters
+n_matches = 1000
+repeats = 3
+n_unique = 5000
+
+# Generate dataset
+dataset = generate_names(n_matches, repeats, n_unique)
+df = pd.DataFrame(dataset, columns=['Name Number 1', 'Name Number 2'])
+df['Match'] = df.apply(lambda row: 1 if is_similar(row['Name Number 1'], row['Name Number 2']) else 0, axis=1)
+
+# Save to Excel
+df.to_excel('name_matching_dataset.xlsx', index=False, engine='openpyxl')
+
+Output Example
+Name Number 1	 	Name Number 2		Match
+John Doe		Jon Doe			1
+María García		Maria Garcia		1
+Abdullah Al-Saud 	Abdulah Al Saud		1
+Sarah Johnson		Sam Johnson		0
+
+The resulting dataset includes:
+
+Name Number 1: The original or modified name.
+Name Number 2: The paired name, which may have variations or be a completely different name.
+Match: A binary indicator (1 for similar names, 0 for non-matching names), suitable for training classification models.
+Practical Applications
+This synthetic dataset is ideal for training models that must handle real-world inconsistencies in name records, such as:
+
+Matching individuals across different record systems in social services, healthcare, and law enforcement.
+Reconciling sponsor or beneficiary records where name consistency is essential but prone to human error.

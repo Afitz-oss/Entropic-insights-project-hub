@@ -1,0 +1,9 @@
+
+### **Additional Files for Semantic-Search-Chatbot**
+
+1. **config_example.json**
+
+   ```json
+   {
+       "openai_api_key": "YOUR_OPENAI_API_KEY"
+   }

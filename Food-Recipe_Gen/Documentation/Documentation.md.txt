@@ -1,0 +1,35 @@
+Project Overview
+This application is a meal suggestion and recipe search tool that leverages the OpenAI API to provide custom meal recommendations based on user preferences and dietary restrictions, as well as the Tasty API to fetch recipes matching user-defined criteria.
+
+Requirements
+Python 3.x
+An OpenAI API key and a Tasty API key saved as environment variables (OPENAI_API_KEY and TASTY_API_KEY respectively).
+pandas, openai, requests, and dash libraries, which can be installed using pip install -r requirements.txt.
+Environment Setup
+API Keys: Set the OPENAI_API_KEY and TASTY_API_KEY environment variables to authenticate API calls.
+Data File: Place an Excel file named "Akim's Food Memory.xlsx" containing user preferences in the specified path in the code. This file should contain columns like "User Name," "Preferred Cuisine List," "Dietary Restrictions," and "Favorite Ingredients."
+Features
+AI Meal Suggestion:
+
+Suggests meals for a user based on their cuisine preferences, dietary restrictions, and favorite ingredients.
+Uses the OpenAI API to generate meal suggestions tailored to user preferences.
+Recipe Search:
+
+Allows users to search for recipes based on keywords, ingredients, and a minimum rating.
+Uses the Tasty API to fetch recipes and format them for display.
+Usage
+Run the Application:
+
+Run the application with python <filename>.py.
+Access the app in your web browser at http://127.0.0.1:8050/.
+Input Fields:
+
+User Name: Enter your name to retrieve personal meal suggestions.
+Cuisine Selection: Select cuisines you prefer for personalized meal suggestions.
+Recipe Search: Enter a recipe query, specific ingredients, and a minimum rating to find recipes matching your criteria.
+Error Handling:
+
+In case of an invalid API key or network issue, an error message will be displayed.
+Limitations
+This app requires users to have their preferences stored in an Excel file.
+Users must provide their own OpenAI and Tasty API keys.

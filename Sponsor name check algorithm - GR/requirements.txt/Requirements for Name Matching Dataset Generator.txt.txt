@@ -1,0 +1,4 @@
+Faker==13.3.4
+textdistance==4.2.1
+pandas==1.5.3
+openpyxl==3.0.9
