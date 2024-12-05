@@ -1,0 +1,5 @@
+# requirements.txt
+
+torch==2.0.0        # PyTorch for building and training the transformer model
+numpy==1.24.0       # NumPy for numerical computations and dataset preprocessing
+tqdm==4.64.0        # Tqdm for displaying progress bars during training
